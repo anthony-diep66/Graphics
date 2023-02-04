@@ -30,16 +30,16 @@ public:
 
     bool hits_circle(double x, double y) const 
     {
-        return ( (x-cx)*(x-cx) + (y-cy)*(y-cy)) <= r*r;
+        return ( (x-cx)*(x-cx) + (y-cy)*(y-cy)) - r*r < 100 &&
+                  ((x-cx)*(x-cx) + (y-cy)*(y-cy)) - r*r > -100    ;
     }
 };
-
 
 int main() {
 
     // Image
-    const auto aspect_ratio = 16.0 / 9.0;
-    const int image_width = 400;
+    const auto aspect_ratio = 16.0 / 16.0;
+    const int image_width = 500;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     Image image(image_width, image_height);
 
@@ -59,28 +59,13 @@ int main() {
     // Render
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
-    for (int y = image_height-1; y >= 0; --y) 
+    for(int y = image_height-1; y >= 0; --y) 
     {
         std::cerr << "\rScanlines remaining: " << y << ' ' << std::flush;
-        for (int x = 0; x < image_width; ++x) 
+        for(int x = 0; x < image_width; ++x) 
         {
             coord c(x, y);
 
-            Color color(0, 1, 0.5);
-            image.SetColor(c, color);
-            /*
-            if( circle.hits_circle(x, y) )
-            {
-                //std::cerr << "hits circle at: " << x << "\t" << y << "\n";
-                Color pixel_color(0.1,0.3,0.5);
-                WritePixel(pixel_Color);
-            }
-            else
-            {
-                //std::err << "hits circle at: " << x << "\t" << y << "\n";
-                Color pixel_color(1, 1, 1);
-                WritePixel(pixel_Color);
-            }        */
         }
     }
     Renderer r(image);
@@ -89,3 +74,4 @@ int main() {
     return 0;
 
 }
+
