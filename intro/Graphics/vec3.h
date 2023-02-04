@@ -15,6 +15,11 @@ public:
         e{0, 0, 0}
     {}
 
+    vec3(double e0, double e1)
+        :
+        e{e0, e1, 0}
+    {}
+
     vec3(double e0, double e1, double e2)
         :
         e{e0, e1, e2}
@@ -115,7 +120,9 @@ inline vec3 unit_vector(vec3 v)
 {
     return v / v.length();
 }
-using point3 = vec3;
-using color = vec3;
+
+#define coord vec3
+#define point3 vec3
+#define Color vec3
 
 #endif
