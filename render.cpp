@@ -28,3 +28,8 @@ void Renderer::PixelShader(const coord c)
 {
 
 }
+
+void Renderer::test()
+{
+    std::cout << "FROM TEST\n";
+}

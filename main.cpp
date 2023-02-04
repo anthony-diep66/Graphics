@@ -58,14 +58,13 @@ int main() {
 
     // Render
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
-
+    std::cerr <<"FROM AMIN\n";
     for(int y = image_height-1; y >= 0; --y) 
     {
         std::cerr << "\rScanlines remaining: " << y << ' ' << std::flush;
         for(int x = 0; x < image_width; ++x) 
         {
             coord c(x, y);
-
         }
     }
     Renderer r(image);

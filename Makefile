@@ -1,6 +1,11 @@
 
-a: testing.o render.o image.o
+all: a test
+
+test: testing.o render.o image.o
 	g++ testing.o render.o image.o -o a
+
+a: main.o render.o image.o
+	g++ main.o render.o image.o -o a
 
 image.o: image.o
 	g++ -c image.cpp
