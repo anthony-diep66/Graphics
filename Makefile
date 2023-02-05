@@ -1,5 +1,4 @@
 all: a test
-
 test: testing.o image.o render.o
 	g++ testing.o image.o render.o -o test
 

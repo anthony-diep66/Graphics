@@ -3,9 +3,9 @@
 
 enum RGB { red, green, blue };
 
-Image::Image(const uint32_t width, const uint32_t height)
+Image::Image(const double ar, const uint32_t width, const uint32_t height)
     :
-    IMAGE_WIDTH(width), IMAGE_HEIGHT(height)
+    aspect_ratio(ar), IMAGE_WIDTH(width), IMAGE_HEIGHT(height)
 {
     image_data = new Color*[IMAGE_HEIGHT];
     for(int i = 0; i < IMAGE_HEIGHT; i++)

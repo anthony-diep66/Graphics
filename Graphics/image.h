@@ -9,12 +9,11 @@ struct Image
 public:
     uint32_t IMAGE_WIDTH;
     uint32_t IMAGE_HEIGHT;
-
+    double aspect_ratio;
     Color **image_data;
 public:
 
-    Image(const uint32_t width, const uint32_t height);
-
+    Image(const double ar, const uint32_t width, const uint32_t height);
     void SetColor(const coord& xy, const Color& c);
     void SetColor(const uint32_t x, const uint32_t y, const Color& c);
     uint32_t GetWidth() const;

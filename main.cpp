@@ -3,7 +3,7 @@
 #include "Graphics/ray.h"
 #include "Graphics/image.h"
 #include "Graphics/render.h"
-
+#include "Graphics/camera.h"
 /*
 Color ray_color(const ray& r)
 {
@@ -40,22 +40,25 @@ int main() {
     const auto aspect_ratio = 16.0 / 16.0;
     const int image_width = 500;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    Image image(image_width, image_height);
-    Renderer r(image);
-    //camera 
-    auto viewport_height = 2.0;
-    auto viewport_width = aspect_ratio * viewport_height;
-    auto focal_length = 1.0;
+    Image image(aspect_ratio, image_width, image_height);
 
-    auto origin = point3(0, 0, 0);
-    auto horizontal = vec3(viewport_width, 0, 0);
-    auto vertical = vec3(0, viewport_height, 0);
-    auto lower_left_corner = origin - horizontal / 2 - vertical / 2 - vec3(0, 0, focal_length);
+    //camera 
+    Camera camera;
+    camera.aspect_ratio = aspect_ratio;
+    camera.viewport_height = 2.0;
+    camera.viewport_width = aspect_ratio * camera.viewport_height;
+    camera.focal_length = 1.0;
+
+    camera.origin = point3(0, 0, 0);
+    camera.horizontal = vec3(camera.viewport_width, 0, 0);
+    camera.vertical = vec3(0, camera.viewport_height, 0);
+    camera.lower_left_corner = camera.origin - camera.horizontal / 2 - camera.vertical / 2 - vec3(0, 0, camera.focal_length);
 
     //circle
-    Circle circle(image_width / 2, image_height / 2, 64);
+    //Circle circle(image_width / 2, image_height / 2, 64);
 
     // Render
+    Renderer r(image, camera);
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for(int y = image_height-1; y >= 0; --y) 
     {

@@ -1,10 +1,11 @@
 #include "Graphics/render.h"
 #include "Graphics/ray.h"
 #include "Graphics/image.h"
+#include "Graphics/vec3.h"
 #include <math.h>
-Renderer::Renderer(const Image image)
+Renderer::Renderer(const Image image, const Camera camera)
         :
-        image(image)
+        image(image), camera(camera)
     {}
 
 void Renderer::render()
@@ -37,15 +38,8 @@ void Renderer::PixelShader(const uint32_t x, const uint32_t y)
 {
     auto u = (double) x / (image.GetWidth() - 1);
     auto v = (double) y / (image.GetHeight() - 1);
-    auto origin = point3(0, 0, 0);
-    auto horizontal = vec3(viewport_width, 0, 0);
-    auto vertical = vec3(0, viewport_height, 0);
-    auto lower_left_corner = origin - horizontal / 2 - vertical / 2 - vec3(0, 0, focal_length);
-    ray r(origin, lower_left_corner + u*horizontal + v*vertical - origin);
-    coord c(x, y);
-    image.test();
-    //image.SetColor(x, y, ray_color(r));
-    //std::cout << image.GetHeight() << std::endl;
+    //ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical - camera.origin);
+    image.SetColor(y, x, Color(u, v, 0));
 }
 void Renderer::PixelShader(const coord c)
 {
