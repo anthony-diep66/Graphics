@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Graphics/Color.h"
 #include "Graphics/vec3.h"
 #include "Graphics/ray.h"
 #include "Graphics/image.h"
@@ -42,7 +41,7 @@ int main() {
     const int image_width = 500;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     Image image(image_width, image_height);
-
+    Renderer r(image);
     //camera 
     auto viewport_height = 2.0;
     auto viewport_width = aspect_ratio * viewport_height;
@@ -58,16 +57,14 @@ int main() {
 
     // Render
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
-    std::cerr <<"FROM AMIN\n";
     for(int y = image_height-1; y >= 0; --y) 
     {
         std::cerr << "\rScanlines remaining: " << y << ' ' << std::flush;
         for(int x = 0; x < image_width; ++x) 
         {
-            coord c(x, y);
+            r.PixelShader(x, y);
         }
     }
-    Renderer r(image);
     r.render();
     image.FreeImage();
     return 0;

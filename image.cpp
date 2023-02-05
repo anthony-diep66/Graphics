@@ -1,6 +1,4 @@
 #include <string.h>
-#include "Graphics/vec3.h"
-#include "Graphics/Color.h"
 #include "Graphics/image.h"
 
 enum RGB { red, green, blue };
@@ -20,9 +18,21 @@ void Image::SetColor(const coord& xy, const Color& c)
 {
     uint32_t x = (uint32_t)xy.x();
     uint32_t y = (uint32_t)xy.y();
-    image_data[y][x][0] = c.r();
-    image_data[y][x][1] = c.g();
-    image_data[y][x][2] = c.b();
+    image_data[y][x][0] = c.x();
+    image_data[y][x][1] = c.y();
+    image_data[y][x][2] = c.z();
+}
+
+void Image::test()
+{
+
+}
+
+void Image::SetColor(const uint32_t x, const uint32_t y, const Color& c)
+{
+    image_data[y][x][0] = c.x();
+    image_data[y][x][1] = c.y();
+    image_data[y][x][2] = c.z();
 }
 
 void Image::FreeImage() 
@@ -65,4 +75,3 @@ uint8_t* Image::GetRGB(const uint32_t& x, const uint32_t& y)
     uint8_t *p = ans;
     return p;
 }
-#

@@ -1,17 +1,16 @@
-
 all: a test
 
-test: testing.o render.o image.o
-	g++ testing.o render.o image.o -o a
+test: testing.o image.o render.o
+	g++ testing.o image.o render.o -o test
 
 a: main.o render.o image.o
 	g++ main.o render.o image.o -o a
 
-image.o: image.o
-	g++ -c image.cpp
+image.o: image.o Graphics/image.h
+	g++ -c -Iinclude image.cpp
 
-render.o: render.cpp 
-	g++ -c render.cpp
+render.o: render.cpp Graphics/render.h
+	g++ -c -Iinclude render.cpp
 
 testing.o: testing.cpp
 	g++ -c testing.cpp

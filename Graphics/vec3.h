@@ -123,5 +123,6 @@ inline vec3 unit_vector(vec3 v)
 
 #define coord vec3
 #define point3 vec3
+#define Color vec3
 
 #endif
