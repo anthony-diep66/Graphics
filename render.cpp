@@ -23,25 +23,14 @@ void Renderer::render()
         }
     }
 }
-Color ray_color(const ray& r)
-{
-    vec3 unit_direction = unit_vector(r.direction());
-    auto t = 0.5 * (unit_direction.y() + 1.0);
 
-    //"linear interpolation or lerp"
-    // t = 1 -> all blue : t = 0 -> all white. Everything in between is a linear blend
-    //lerp in form: Value(t) = (1 - t) * start_color + t * end_color
-    return (1.0-t) * Color(1.0,1.0,1.0) + t*Color(0.5,0.7,1.0);
-}
 
 void Renderer::PixelShader(const uint32_t x, const uint32_t y)
 {
     auto u = (double) x / (image.GetWidth() - 1);
     auto v = (double) y / (image.GetHeight() - 1);
-    //ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical - camera.origin);
-    image.SetColor(y, x, Color(u, v, 0));
-}
-void Renderer::PixelShader(const coord c)
-{
-
+    //ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical - camera.origin); 
+    ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical - camera.origin); 
+    //image.SetColor(y, x, r.ray_color());
+    image.SetColor(y, x, r.ray_color());
 }

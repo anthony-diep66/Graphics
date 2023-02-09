@@ -23,11 +23,6 @@ void Image::SetColor(const coord& xy, const Color& c)
     image_data[y][x][2] = c.z();
 }
 
-void Image::test()
-{
-
-}
-
 void Image::SetColor(const uint32_t x, const uint32_t y, const Color& c)
 {
     image_data[y][x][0] = c.x();

@@ -4,18 +4,6 @@
 #include "Graphics/image.h"
 #include "Graphics/render.h"
 #include "Graphics/camera.h"
-/*
-Color ray_color(const ray& r)
-{
-    vec3 unit_direction = unit_vector(r.direction());
-    auto t = 0.5 * (unit_direction.y() + 1.0);
-
-    //"linear interpolation or lerp"
-    // t = 1 -> all blue : t = 0 -> all white. Everything in between is a linear blend
-    //lerp in form: Value(t) = (1 - t) * start_color + t * end_color
-    return (1.0-t) * Color(1.0,1.0,1.0) + t*Color(0.5,0.7,1.0);
-}
-*/
 struct Circle 
 {
 public:

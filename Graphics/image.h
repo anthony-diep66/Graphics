@@ -21,7 +21,6 @@ public:
     uint8_t* GetRGB(coord xy);
     uint8_t* GetRGB(const uint32_t& x, const uint32_t& y);
     void FreeImage();
-    void test();
 };
 
 #endif
