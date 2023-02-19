@@ -18,18 +18,21 @@ int main() {
     camera.viewport_width = aspect_ratio * camera.viewport_height;
     camera.focal_length = 1.0;
 
-    camera.origin = point3(0, 0, 1);
+    camera.origin = point3(0, 0, 0);
     camera.horizontal = vec3(camera.viewport_width, 0, 0);
     camera.vertical = vec3(0, camera.viewport_height, 0);
     camera.lower_left_corner = camera.origin - camera.horizontal / 2 - camera.vertical / 2 - vec3(0, 0, camera.focal_length);
+//camera.lower_left_corner = camera.origin - camera.horizontal / 2 - camera.vertical / 2 - vec3(0, 0, camera.focal_length) + vec3(-aspect_ratio/2, -0.5, 0);
 
     //construct a scene
     Scene scene;
-    scene.Add_Sphere(point3(0,0,-1), 0.5);
-    scene.Add_Sphere(point3(-0.5,0,-1), 0.2);
+    scene.Add_Sphere(point3(0,0.5,-1), 0.3);
+    scene.Add_Sphere(point3(-0.4,-0.2,-1), 0.2);
+    scene.Add_Sphere(point3(0.4,-0.2,-1), 0.2);
     //set colors
-    scene.Set_Color(Color(1,0,1), 0);
-    scene.Set_Color(Color(1,0,0), 1);
+    scene.Set_Color(Color(0,0,1), 0);
+    scene.Set_Color(Color(0,0,1), 1);
+    scene.Set_Color(Color(0,0,1), 2);
     // Render
     Renderer r(image, camera);
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";

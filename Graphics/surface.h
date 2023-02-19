@@ -1,5 +1,5 @@
-#ifndef SHAPES_H
-#define SHAPES_H
+#ifndef SURFACES_H
+#define SURFACES_H
 #include "ray.h"
 #include "memory"
 
@@ -10,7 +10,7 @@ struct hit_record
     double t;
 };
 
-class Shape 
+class Surface
 {
 public:
     virtual double hit(const ray& r) const = 0;

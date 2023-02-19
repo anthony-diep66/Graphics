@@ -24,26 +24,47 @@ void Renderer::render()
     }
 }
 
-
-void Renderer::PixelShader(Scene scene, const uint32_t x, const uint32_t y)
+void Renderer::PixelShader(const Scene& scene, const uint32_t x, const uint32_t y)
 {
     auto u = (double) x / (image.GetWidth() - 1);
     auto v = (double) y / (image.GetHeight() - 1);
 
     //perspective projection 
-    //ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical - camera.origin); 
-
-    //ortho
-    ray r(camera.origin + camera.lower_left_corner + u * camera.horizontal + v * camera.vertical, vec3(0, 0, -1));
+    ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical - camera.origin); 
+    /*vec3 direction = vec3(u * camera.viewport_width, v * camera.viewport_height, 0);
+    ray r(camera.origin + direction, vec3(0, 0, -1));
+    */
+    //ortho: when using, move camera or object back
+    //ray r(camera.lower_left_corner + u * camera.horizontal + v * camera.vertical - camera.origin, vec3(0, 0, -1));
 
     Color c;
-    //from ray.cpp
-    Sphere s(point3(0,0.9,-1), 0.5);
-    s.color = Color(1,0,1);
-
-    point3 spherecenter = s.center + vec3(0, 0, -1);
-    Sphere ts(spherecenter, s.radius);
-    double t = ts.hit(r);
+    double t = 1e6;
+    Sphere closest;
+    //Sphere s(point3(0,0,-1), 0.5);
+    for(Sphere sphere : scene.Spheres)
+    {
+        double tt = sphere.hit(r);
+        if( tt <= 0 )    //doesn't hit
+            continue;
+        vec3 N = unit_vector(r.at(tt) - sphere.center);
+        N = unit_vector(N + vec3(1,1,1));
+        point3 light_source = unit_vector(vec3(-1,-1,-1));
+        double d = dot(N, -light_source);   //invert the light vector so that they're both facing outwards
+        if( d < 0 )
+            d = 0;
+        if( tt < t )
+        {
+            t = tt;
+            closest = sphere;
+        }
+    }
+    if( t == 1e6 )//miss
+        image.SetColor(y, x, Color(1,1,1));
+    else
+        image.SetColor(y, x, closest.color);
+    /*
+    Sphere s = scene.Spheres[0];
+    double t = s.hit(r);
 
     if( t <= 0 )    //doesn't hit
     {
@@ -52,15 +73,16 @@ void Renderer::PixelShader(Scene scene, const uint32_t x, const uint32_t y)
         return;
     }
 
-    vec3 N = unit_vector(r.at(t) - ts.center);
+    vec3 N = unit_vector(r.at(t) - s.center);
     N = unit_vector(N + vec3(1,1,1));
     point3 light_source = unit_vector(vec3(-1,-1,-1));
-    double d = dot(N, -light_source);
+    double d = dot(N, -light_source);   //invert the light vector so that they're both facing outwards
     if( d < 0 )
         d = 0;
+    /*
     c = 0.5 * (N + point3(1, 1, 1));
-    c *= d;
-        
+    c *= d*/
+    //c = scene.Spheres[0].color;
 
-    image.SetColor(y, x, c);
+    //image.SetColor(y, x, c);
 }

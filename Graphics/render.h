@@ -14,6 +14,6 @@ private:
 public: 
     Renderer(const Image image, const Camera camera);
     void render();
-    void PixelShader(Scene scene, const uint32_t x, const uint32_t y);
+    void PixelShader(const Scene& scene, const uint32_t x, const uint32_t y);
 };
 #endif

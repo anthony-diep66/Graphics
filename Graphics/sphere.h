@@ -1,9 +1,9 @@
 #ifndef SPHERE_H
 #define SPHERE_H
-#include "shapes.h"
+#include "surface.h"
 #include "vec3.h"
 
-class Sphere : public Shape 
+class Sphere : public Surface
 {
 public: 
     point3 center;
