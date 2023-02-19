@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-int main(void)
+int run_tests()
 {
     uint8_t arr[10];
     arr[0] = 1;

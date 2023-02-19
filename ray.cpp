@@ -34,13 +34,10 @@ extern Color ray::ray_color()
         double d = dot(N, -light_source);
         if( d < 0 )
             d = 0;
-        /*
-        Color sphere_color(1, 0, 1);
-        sphere_color *= d; 
-        return sphere_color;
-        */
         Color c = 0.5 * (N + point3(1, 1, 1));
         c *= d;
+        //Color blend = (1.0f - t)*Color(1,1,1) + t*Color(0.2,0.5,0.7);
+        //return 0.5*(blend + point3(1,1,1));
         return c;
 
     }

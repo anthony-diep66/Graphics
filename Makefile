@@ -1,21 +1,29 @@
-all: a test
-test: testing.o image.o render.o ray.o
-	g++ testing.o image.o render.o ray.o -o test
+CC=g++
+CFLAGS=-Wall -Wextra
+TARGET=a
+TEST_TARGET=test
 
-a: main.o render.o image.o ray.o
-	g++ main.o render.o image.o ray.o -o a
+CPP_FILES=image.cpp main.cpp ray.cpp render.cpp
+TEST_CPP_FILES=testing.cpp
 
-image.o: image.o Graphics/image.h
-	g++ -c -Iinclude image.cpp
+OBJECTS=$(CPP_FILES:.cpp=.o)
+TEST_OBJECTS=$(TEST_CPP_FILES:.cpp=.o)
 
-render.o: render.cpp Graphics/render.h
-	g++ -c -Iinclude render.cpp
+all: $(TARGET) $(TEST_TARGET)
 
-testing.o: testing.cpp
-	g++ -c testing.cpp
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $(OBJECTS)
 
-ray.o: ray.cpp Graphics/ray.h
-	g++ -c -Iinclude ray.cpp
+$(TEST_TARGET): $(TEST_OBJECTS) $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $(TEST_OBJECTS) $(OBJECTS)
+
+%.o: %.cpp %.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+.PHONY: run clean 
+
+run: $(TARGET)
+	./$(TARGET) > image.ppm 
 
 clean:
-	rm *.o *.exe 
+	rm -f $(TARGET) $(TEST_TARGET) $(OBJECTS) $(TEST_OBJECTS) image.ppm
