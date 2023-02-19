@@ -1,27 +1,8 @@
 #include <iostream>
-#include "Graphics/vec3.h"
 #include "Graphics/ray.h"
 #include "Graphics/image.h"
 #include "Graphics/render.h"
-#include "Graphics/camera.h"
-struct Circle 
-{
-public:
-    double cx, cy, r;
-public: 
-    Circle() = default;
-    Circle(double x, double y, double r)
-        :
-        cx(x), cy(y), r(r)
-    {}
-
-    bool hits_circle(double x, double y) const 
-    {
-        return ( (x-cx)*(x-cx) + (y-cy)*(y-cy)) - r*r < 100 &&
-                  ((x-cx)*(x-cx) + (y-cy)*(y-cy)) - r*r > -100    ;
-    }
-};
-
+#include "Graphics/scene.h"
 int main() {
 
     // Image
@@ -42,8 +23,9 @@ int main() {
     camera.vertical = vec3(0, camera.viewport_height, 0);
     camera.lower_left_corner = camera.origin - camera.horizontal / 2 - camera.vertical / 2 - vec3(0, 0, camera.focal_length);
 
-    //circle
-    //Circle circle(image_width / 2, image_height / 2, 64);
+    //construct a scene
+    Scene scene;
+    scene.Add_Sphere(point3(0,0,-1), 0.5);
 
     // Render
     Renderer r(image, camera);

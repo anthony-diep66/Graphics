@@ -5,7 +5,7 @@
 
 class ray 
 {
-private:
+public:
     point3 orig;
     vec3 dir;
 public: 

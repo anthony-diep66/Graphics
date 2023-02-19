@@ -2,6 +2,7 @@
 #include "Graphics/ray.h"
 #include "Graphics/image.h"
 #include "Graphics/vec3.h"
+//#include "Graphics/scene.h" 
 #include <math.h>
 Renderer::Renderer(const Image image, const Camera camera)
         :
@@ -29,8 +30,6 @@ void Renderer::PixelShader(const uint32_t x, const uint32_t y)
 {
     auto u = (double) x / (image.GetWidth() - 1);
     auto v = (double) y / (image.GetHeight() - 1);
-    //ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical - camera.origin); 
     ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical - camera.origin); 
-    //image.SetColor(y, x, r.ray_color());
     image.SetColor(y, x, r.ray_color());
 }

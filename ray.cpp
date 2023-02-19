@@ -26,41 +26,25 @@ point3 ray::at(double t) const
 }
 extern Color ray::ray_color()
 {
-    double t = hit_sphere(point3(0,0,-1),0.5,*this);
-    if( t > 0 )
+    Sphere s(point3(0,0,-1), 0.5);
+    s.color = Color(1,0,1);
+    double t = s.hit(*this);
+    if( t > 0 ) //hits
     {
         vec3 N = unit_vector(at(t) - vec3(0, 0, -1));
         point3 light_source = unit_vector(vec3(-1,-1,-1));
         double d = dot(N, -light_source);
         if( d < 0 )
             d = 0;
-        Color c = 0.5 * (N + point3(1, 1, 1));
+        //Color c = 0.5 * (N + point3(1, 1, 1));
+        Color c = s.color;
         c *= d;
-        //Color blend = (1.0f - t)*Color(1,1,1) + t*Color(0.2,0.5,0.7);
-        //return 0.5*(blend + point3(1,1,1));
         return c;
-
     }
-    else
+    else //doesn't hit
     {
-        //"linear interpolation or lerp"
-        // t = 1 -> all blue : t = 0 -> all white. Everything in between is a linear blend
-        //lerp in form: Value(t) = (1 - t) * start_color + t * end_color
-        //return (1.0-t) * Color(1.0,1.0,1.0) + t*Color(0.5,0.7,1.0);
-        return Color(0,0,0);
+        t = 1 + (dir.y() * 0.5);
+        return (1.0-t) * Color(1.0,1.0,1.0) + t*Color(0.5,0.7,1.0);
     }
     
 }
-
-double hit_sphere(const point3& center, double radius, const ray& r)
-{
-    vec3 sphere_center = r.origin() - center;
-    auto a = dot(r.direction(), r.direction());
-    auto b = 2.0 * dot(sphere_center, r.direction());
-    auto c = dot(sphere_center, sphere_center) - radius*radius;
-    auto discriminant = b*b - 4*a*c;
-    if( discriminant < 0 )
-        return -1.0;
-    return (-b - sqrt(discriminant)) / (2 * a);
-}
-

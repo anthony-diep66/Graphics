@@ -1,6 +1,7 @@
 #ifndef SHAPES_H
 #define SHAPES_H
 #include "ray.h"
+#include "memory"
 
 struct hit_record
 {
@@ -12,7 +13,7 @@ struct hit_record
 class Shape 
 {
 public:
-    virtual bool hit(const ray& r, double tmin, double tmax, hit_record& rec) const = 0;
+    virtual double hit(const ray& r) const = 0;
 };
 
 #endif

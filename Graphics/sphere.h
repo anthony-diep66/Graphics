@@ -8,18 +8,12 @@ class Sphere : public Shape
 public: 
     point3 center;
     double radius;
+    Color color;
 public:
-    Sphere() = default;
-    Sphere(point3 center, double r)
-        :
-        center(center), radius(r)
-    {}
-    virtual bool hit(const ray& r, double tmin, double tmax, hit_record& rec) const override; 
+    Sphere();
+    Sphere(point3 center, double r);
+    virtual double hit(const ray& r) const override; 
 };
 
-bool Sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const 
-{
-
-}
 
 #endif
