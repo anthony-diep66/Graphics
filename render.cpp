@@ -2,7 +2,6 @@
 #include "Graphics/ray.h"
 #include "Graphics/image.h"
 #include "Graphics/vec3.h"
-//#include "Graphics/scene.h" 
 #include <math.h>
 Renderer::Renderer(const Image image, const Camera camera)
         :
@@ -26,7 +25,7 @@ void Renderer::render()
 }
 
 
-void Renderer::PixelShader(const uint32_t x, const uint32_t y)
+void Renderer::PixelShader(Scene scene, const uint32_t x, const uint32_t y)
 {
     auto u = (double) x / (image.GetWidth() - 1);
     auto v = (double) y / (image.GetHeight() - 1);

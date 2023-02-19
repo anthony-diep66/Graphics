@@ -26,7 +26,10 @@ int main() {
     //construct a scene
     Scene scene;
     scene.Add_Sphere(point3(0,0,-1), 0.5);
-
+    scene.Add_Sphere(point3(-0.5,0,-1), 0.2);
+    //set colors
+    scene.Set_Color(Color(1,0,1), 0);
+    scene.Set_Color(Color(1,0,0), 1);
     // Render
     Renderer r(image, camera);
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
@@ -35,7 +38,7 @@ int main() {
         std::cerr << "\rScanlines remaining: " << y << ' ' << std::flush;
         for(int x = 0; x < image_width; ++x) 
         {
-            r.PixelShader(x, y);
+            r.PixelShader(scene, x, y);
         }
     }
     r.render();
