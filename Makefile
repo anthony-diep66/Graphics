@@ -3,8 +3,8 @@ CFLAGS=-Wall -Wextra
 TARGET=a
 TEST_TARGET=test
 
-CPP_FILES=image.cpp main.cpp ray.cpp render.cpp
-TEST_CPP_FILES=testing.cpp
+CPP_FILES:=$(wildcard *.cpp)
+TEST_CPP_FILES:=$(wildcard test_*.cpp)
 
 OBJECTS=$(CPP_FILES:.cpp=.o)
 TEST_OBJECTS=$(TEST_CPP_FILES:.cpp=.o)
