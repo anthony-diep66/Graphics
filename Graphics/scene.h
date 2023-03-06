@@ -1,14 +1,28 @@
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef SURFACE_LIST
+#define SURFACE_LIST
+
+#include "surface.h"
+#include "sphere.h"
+#include <memory>
 #include <vector>
 
-#include "sphere.h"
-
-struct Scene 
+class Scene : public Surface 
 {
-    std::vector<Sphere> Spheres;
-    void Add_Sphere(point3 center, double r);
-    void Set_Color(Color c, int idx);
+public: 
+    std::vector<std::shared_ptr<Surface>> objects;
+
+public:
+    Scene() = default;
+    Scene(std::shared_ptr<Surface> object);
+
+    void clear();
+    void add(std::shared_ptr<Surface> object);
+
+    virtual bool hit(   const ray& r, 
+                        double t_min, 
+                        double t_max, 
+                        hit_record& record) const override;
 };
+
 
 #endif

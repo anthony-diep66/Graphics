@@ -1,8 +1,6 @@
 #include "Graphics/render.h"
-#include "Graphics/ray.h"
 #include "Graphics/image.h"
-#include "Graphics/vec3.h"
-#include <math.h>
+#include "utils/utils.cpp"
 Renderer::Renderer(const Image image, const Camera camera)
         :
         image(image), camera(camera)
@@ -30,12 +28,27 @@ void Renderer::PixelShader(const Scene& scene, const uint32_t x, const uint32_t 
     auto v = (double) y / (image.GetHeight() - 1);
 
     //perspective projection 
-    ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical - camera.origin); 
+    ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical); 
+    hit_record record;
+    if( scene.hit(r, 0, infinity, record) )
+    {
+        image.SetColor(y, x, 0.5 * (record.normal + Color(1,1,1)));
+    }
+    else
+    {
+        //auto t = 1 + (r.dir.y() * 0.5);
+        //image.SetColor(y, x, (1.0-t) * Color(1.0,1.0,1.0) + t*Color(0.5,0.7,1.0));
+
+        vec3 unit_direction = unit_vector(r.direction());
+        auto t = 0.5*(unit_direction.y() + 1.0);
+        image.SetColor(y, x, (1.0-t)*Color(1.0,1.0,1.0)+t*Color(0.5,0.7,1.0));
+    }
     /*vec3 direction = vec3(u * camera.viewport_width, v * camera.viewport_height, 0);
     ray r(camera.origin + direction, vec3(0, 0, -1));
     */
     //ortho: when using, move camera or object back
     //ray r(camera.lower_left_corner + u * camera.horizontal + v * camera.vertical - camera.origin, vec3(0, 0, -1));
+    /*
     Color c;
     double t = 1e6;
     Sphere closest;
