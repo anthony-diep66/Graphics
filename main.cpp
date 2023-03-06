@@ -26,13 +26,9 @@ int main() {
 
     //construct a scene
     Scene scene;
-    scene.Add_Sphere(point3(0,0.5,-1), 0.3);
-    scene.Add_Sphere(point3(-0.4,-0.2,-1), 0.2);
-    scene.Add_Sphere(point3(0.4,-0.2,-1), 0.2);
+    scene.Add_Sphere(point3(0,0,-1), 0.5);
     //set colors
     scene.Set_Color(Color(0,0,1), 0);
-    scene.Set_Color(Color(0,0,1), 1);
-    scene.Set_Color(Color(0,0,1), 2);
     // Render
     Renderer r(image, camera);
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";

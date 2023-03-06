@@ -36,7 +36,6 @@ void Renderer::PixelShader(const Scene& scene, const uint32_t x, const uint32_t 
     */
     //ortho: when using, move camera or object back
     //ray r(camera.lower_left_corner + u * camera.horizontal + v * camera.vertical - camera.origin, vec3(0, 0, -1));
-
     Color c;
     double t = 1e6;
     Sphere closest;
@@ -59,7 +58,12 @@ void Renderer::PixelShader(const Scene& scene, const uint32_t x, const uint32_t 
         }
     }
     if( t == 1e6 )//miss
-        image.SetColor(y, x, Color(1,1,1));
+    {
+        t = 1 + (r.dir.y() * 0.5);
+        image.SetColor(y, x, (1.0-t) * Color(1.0,1.0,1.0) + t*Color(0.5,0.7,1.0));
+
+        //image.SetColor(y, x, Color(0,0,0));
+    }
     else
         image.SetColor(y, x, closest.color);
     /*

@@ -13,6 +13,7 @@ public:
     Sphere();
     Sphere(point3 center, double r);
     virtual double hit(const ray& r) const override; 
+    virtual bool hit(const ray& r, double t_min, double t_max, hit_record& record) const override; 
 };
 
 
