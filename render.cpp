@@ -22,13 +22,15 @@ void Renderer::render()
     }
 }
 
-void Renderer::PixelShader(const Scene& scene, const uint32_t x, const uint32_t y)
+void Renderer::PixelShader(const Scene& scene, const uint32_t x, const uint32_t y, const Camera camera)
 {
     auto u = (double) x / (image.GetWidth() - 1);
     auto v = (double) y / (image.GetHeight() - 1);
 
+
     //perspective projection 
-    ray r(camera.origin, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical); 
+    //ray r({0,0,0}, camera.lower_left_corner + u*camera.horizontal + v*camera.vertical); 
+    ray r = camera.get_ray(u, v);
     hit_record record;
     if( scene.hit(r, 0, infinity, record) )
     {
